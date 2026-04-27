@@ -38,6 +38,13 @@ export default function SpacesPage() {
     }
   }, [status, userRole, router]);
 
+  useEffect(() => {
+    if (userRole === 'admin' || userRole === 'dev') {
+      const interval = setInterval(fetchSpaces, 5000);
+      return () => clearInterval(interval);
+    }
+  }, [userRole]);
+
   const fetchSpaces = async () => {
     try {
       const res = await fetch('/api/spaces');
